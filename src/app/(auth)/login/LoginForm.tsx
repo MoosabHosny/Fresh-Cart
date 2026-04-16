@@ -27,9 +27,8 @@ export default function LoginForm() {
     resolver: zodResolver(schemaLogin),
     // resolver: zodResolver(schema),
   });
-  async function sandUserLogin(data) {
-    const response = await handleLogin(data);
-
+  async function sandUserLogin(data: any) {
+    const response: any = await handleLogin(data);
     if (response?.message === "success") {
       router.push("/");
     }

@@ -1,17 +1,6 @@
-// import { GetCart } from "../Cart.action";
-// import CheckoutClientWrapper from "./CheckoutClientWrapper";
-
-// export default async function Page() {
-//   const {cartId} = await GetCart();
-//   // console.log('data======>>>>>>>>0',cartId)
-//   return (
-//     <CheckoutClientWrapper cartId={cartId} />
-//   );
-// }
-
-
 import { GetCart } from "../Cart.action";
 import CheckoutClientWrapper from "./CheckoutClientWrapper";
+export const dynamic = 'force-dynamic';
 
 export default async function Page() {
   const cartData = await GetCart();

@@ -26,6 +26,8 @@ import Link from "next/link";
 import OrderSummary from "./OrderSummary";
 import DeleteItemButton from "@/components/DeleteItemButton/DeleteItemButton";
 
+export const dynamic = 'force-dynamic';
+
 export default async function page() {
   const cart = await GetCart();
 

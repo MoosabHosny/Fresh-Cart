@@ -42,7 +42,7 @@ import logo from "@images/FreshCart.svg";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/Shared/context/CartContext";
 
-export default function Navbar(id? :string) {
+export default function Navbar({ id }: { id?: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { data } = useSession();
   const user = data?.user;

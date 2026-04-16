@@ -73,7 +73,7 @@ export default async function Page() {
         bgColor='#863DFF'
       />
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 container mx-auto my-10">
-      {CategoryList.map((e) => (
+      {CategoryList.map((e:any) => (
         <Card
           key={e._id}
           className="group flex flex-col items-center justify-center text-center w-full p-4 gap-3 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"

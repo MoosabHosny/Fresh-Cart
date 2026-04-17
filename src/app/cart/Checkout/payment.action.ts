@@ -21,7 +21,6 @@ export async function CreateCashOrderFromCart(
     const resData = await response.json();
     console.log(resData);
   revalidatePath("/cart");
-  // redirect('/cart');
   return resData;
 
 }
@@ -46,9 +45,6 @@ export async function CreateOnlineOrderFromCart(
       },
     );
     const resData = await response.json();
-    console.log(resData);
-  // revalidatePath("/cart");
-  // redirect('/cart');
   return resData;
 
 }

@@ -41,6 +41,7 @@ import { useSession, signOut } from "next-auth/react";
 import logo from "@images/FreshCart.svg";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/Shared/context/CartContext";
+import AppButton from "@/Shared/AppButton/AppButton";
 
 export default function Navbar({ id }: { id?: string }) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -50,8 +51,12 @@ export default function Navbar({ id }: { id?: string }) {
 
   const router = useRouter();
 
-  function handleLogout() {
-    signOut({ redirect: false });
+  async function handleLogout() {
+    // signOut({ redirect: false });
+    // router.push("/login");
+    await signOut({ redirect: false });
+
+    setIsOpen(false);
     router.push("/login");
   }
 
@@ -76,9 +81,9 @@ export default function Navbar({ id }: { id?: string }) {
               placeholder="Search for products, brands and more..."
               className="w-full border border-gray-200 rounded-4xl py-2.5 px-4 pr-12 focus:outline-none focus:border-main-color focus:ring-1 focus:ring-main-color transition-all"
             />
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-main-color text-white p-2 rounded-full hover:bg-opacity-90 transition">
+            <AppButton className="absolute right-2 top-1/2 -translate-y-1/2 bg-main-color text-white p-2 rounded-full hover:bg-opacity-90 transition">
               <Search size={18} />
-            </button>
+            </AppButton>
           </div>
 
           {/* Right Section */}
@@ -124,10 +129,7 @@ export default function Navbar({ id }: { id?: string }) {
                         href="/mens-fashion"
                         title="Men's Fashion"
                       />
-                      <CategoryLink
-                        href="/Products"
-                        title="Beauty & Health"
-                      />
+                      <CategoryLink href="/Products" title="Beauty & Health" />
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
@@ -190,14 +192,14 @@ export default function Navbar({ id }: { id?: string }) {
               ) : (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="hidden sm:block">
+                    <AppButton className="hidden sm:block">
                       <Avatar className="w-10 h-10">
                         <AvatarImage src={user?.image ?? ""} />
                         <AvatarFallback className="bg-green-100 text-green-700">
                           <User size={18} className="text-slate-400" />
                         </AvatarFallback>
                       </Avatar>
-                    </button>
+                    </AppButton>
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end" className="w-64 p-2">
@@ -212,8 +214,9 @@ export default function Navbar({ id }: { id?: string }) {
                         <span className="text-sm font-semibold text-slate-800">
                           {user?.name || "User"}
                         </span>
-                          <span className="text-sm font-semibold text-slate-800">
-                            {user?.email || "User"}</span>
+                        <span className="text-sm font-semibold text-slate-800">
+                          {user?.email || "User"}
+                        </span>
                       </div>
                     </div>
 
@@ -295,23 +298,151 @@ export default function Navbar({ id }: { id?: string }) {
                 </DropdownMenu>
               )}
 
-              <button
+              <AppButton
                 onClick={() => setIsOpen(!isOpen)}
                 className="xl:hidden p-2 hover:bg-gray-100 rounded-lg"
               >
                 {isOpen ? <X /> : <Menu />}
-              </button>
+              </AppButton>
             </div>
           </div>
         </div>
 
+        {/* {isOpen && (
+          <div>
+            <div className="xl:hidden mt-4 border-t pt-4 flex flex-col gap-3">
+              <Link href="/">Home</Link>
+              <Link href="/Products">Shop</Link>
+              <Link href="/Category">Categories</Link>
+              <Link href="brands">Brands</Link>
+            </div>
+            <div>
+              <Link href="/wishlist" className="relative group">
+                <Heart className="text-gray-700 group-hover:text-main-color transition" />
+                Wishlist
+              </Link>
+
+              <Link href="/cart" className="relative group flex items-center">
+                <ShoppingCart className="text-gray-600 group-hover:text-green-600 transition-colors w-6 h-6" />
+                Cart
+              </Link>
+            </div>
+            <div>
+              <div>
+                <DropdownMenuItem asChild className="cursor-pointer py-2 px-3">
+                  <Link
+                    href="/profile"
+                    className="flex items-center gap-3 text-slate-600"
+                  >
+                    <User size={18} className="text-slate-400" />
+                    <span>My Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+              </div>
+              <div>
+                <DropdownMenuItem
+                  className="text-red-500 cursor-pointer py-2 px-3 flex items-center gap-3"
+                  onClick={handleLogout}
+                >
+                  <LogOut size={18} />
+                  <span className="font-medium">Sign Out</span>
+                </DropdownMenuItem>
+              </div>
+            </div>
+          </div>
+        )} */}
         {isOpen && (
-          <div className="xl:hidden mt-4 border-t pt-4 flex flex-col gap-3">
-            <Link href="/">Home</Link>
-            <Link href="/shop">Shop</Link>
-            <Link href="/categories">Categories</Link>
-            <Link href="/Brands">Brands</Link>
-            <Link href="/support">Support</Link>
+          <div className="xl:hidden mt-4 border-t pt-4 flex flex-col gap-4">
+            {/* الروابط الأساسية */}
+            <div className="flex flex-col gap-3">
+              <Link
+                href="/"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-main-color"
+              >
+                Home
+              </Link>
+              <Link
+                href="/Products"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-main-color"
+              >
+                Shop
+              </Link>
+              <Link
+                href="/Category"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-main-color"
+              >
+                Categories
+              </Link>
+              <Link
+                href="/brands"
+                onClick={() => setIsOpen(false)}
+                className="hover:text-main-color"
+              >
+                Brands
+              </Link>
+            </div>
+
+            {/* روابط المفضلة والعربة */}
+            <div className="flex flex-col gap-3 border-t pt-3">
+              <Link
+                href="/wishlist"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 text-gray-700 hover:text-main-color"
+              >
+                <Heart size={18} color="var(--color-red-600)"/>
+                <span>Wishlist</span>
+              </Link>
+              <Link
+                href="/cart"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-2 text-gray-700 hover:text-main-color"
+              >
+                <ShoppingCart size={18} fill="var(--color-main-color)" color="var(--color-main-color)" />
+                <span>Cart</span>
+              </Link>
+            </div>
+
+            {!user ? (
+              <div className="flex  gap-2 w-full">
+                {/* أزلنا hidden sm:flex لكي تظهر الروابط في الموبايل */}
+                <Link
+                  href="/login"
+                  className="flex flex-1 items-center justify-center gap-2 bg-main-color text-white px-5 py-2.5 rounded-lg hover:brightness-90 transition font-semibold"
+                >
+                  <span>Sign In</span>
+                </Link>
+                <Link
+                  href="/register"
+                  className="flex flex-1 items-center justify-center gap-2 border border-main-color text-main-color px-5 py-2.5 rounded-lg hover:bg-gray-50 transition font-semibold"
+                >
+                  <span>Sign IP</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3 border-t pt-3 pb-4">
+                <Link
+                  href="/profile"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-3 text-slate-600 hover:text-main-color"
+                >
+                  <User size={18} className="text-slate-400" />
+                  <span>My Profile</span>
+                </Link>
+
+                <AppButton
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                  className="flex items-center gap-3 text-red-500 font-medium hover:opacity-80 transition"
+                >
+                  <LogOut size={18} />
+                  <span>Sign Out</span>
+                </AppButton>
+              </div>
+            )}
           </div>
         )}
       </div>

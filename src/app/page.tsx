@@ -9,6 +9,8 @@ import Link from "next/link";
 import { ArrowRight, MoveRight } from "lucide-react";
 import Footer from "@/components/Footer/Footer";
 import { getUserToken } from "./myUtil";
+import NewsletterSection from "@/components/NewsletterSection/NewsletterSection";
+import PromoCards from "@/components/PromoCards/PromoCards";
 
 export default async function page() {
   // console.log(process.env.NEXT_PUBLIC_BASE_URL)
@@ -44,11 +46,14 @@ export default async function page() {
         </div>
       </div>
 
+      <PromoCards/>
+
       <div className="grid grid-cols-1  md:grid-cols-4 lg:grid-cols-5 gap-8 container mx-auto mt-6">
         {ProductsList.map((e) => (
           <ProductsCard key={e._id} prod={e} />
         ))}
       </div>
+      <NewsletterSection/>
       {/* <Footer/> */}
     </>
   );
